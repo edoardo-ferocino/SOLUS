@@ -323,6 +323,12 @@ if SAVE_FWD == 1
         
     end
 end
+if CALC_CONTRAST
+    CalcContrast(RefTD,DataTD,DOT.dmask,REC,'cw','teorethical');
+    if ~isempty(REC.time.roi)
+        CalcContrast(RefTD,DataTD,DOT.dmask,REC,'gate_teo','teorethical',NUM_TW,DOT);
+    end
+end
 %==========================================================================
 %%                              END FORWARD
 %==========================================================================
@@ -365,6 +371,8 @@ if ((EXPERIMENTAL == 1) && (EXP_DATA == 1))
         sdCW = sqrt(DataCW);    % Poisson
     end
 end
+if CALC_CONTRAST, CalcContrast(RefTD,DataTD,DOT.dmask,REC,'cw','experimental'); end
+
 %% ========================================================================
 if RECONSTRUCTION == 1
 disp('-------------------------------------------------------------------')
@@ -449,7 +457,7 @@ end
 clear DataTD sdTD  
 tilefigs;
 end
-
+if CALC_CONTRAST, CalcContrast(REC.ref,REC.Data,REC.dmask,REC,'gate','experimental'); end
 % % =========================================================================
 % %%                        Initial parameter estimates 
 % % =========================================================================
